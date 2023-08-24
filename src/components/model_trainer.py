@@ -14,6 +14,8 @@ from sklearn.neighbors import KNeighborsRegressor
 from src.logger import logging
 from src.exception import CustomException
 from src.utils import save_object , evaluate_models
+from src.params import params
+
 
 @dataclass
 class ModelTrainerConfig:
@@ -31,16 +33,16 @@ class ModelTrainer:
             
             model = {
                 "Random Forest" : RandomForestRegressor(),
-                "Decision tree" : DecisionTreeRegressor(),
+                "Decision Tree" : DecisionTreeRegressor(),
                 "Gradient Boosting" : GradientBoostingRegressor(),
-                "linear Regression" : LinearRegression(),
-                "K-Neighbors Regressor" : KNeighborsRegressor(),
+                "Linear Regression" : LinearRegression(),
                 "XGBRegressor" : XGBRegressor(),
-                "Catboost Regressor" : CatBoostRegressor(verbose=False),
+                "CatBoosting Regressor" : CatBoostRegressor(verbose=False),
                 "AdaBoost Regressor" : AdaBoostRegressor(),
             }
+
             model_report:dict = evaluate_models( X_train=X_train , y_train = y_train , X_test=X_test , y_test=y_test ,
-                                                models = model)
+                                                models = model , param=params)
             #get best model score
             best_model_score = max(sorted(list(model_report.values())))
 
